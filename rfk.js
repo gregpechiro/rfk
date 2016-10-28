@@ -479,7 +479,7 @@ com.robotfindskitten.Screen = (function(rfk, global) {
         this.canvas = canvas;
         this.context = canvas.getContext("2d");
 
-        this.context.font = "1em Courier, Monospace";
+        this.context.font = "1em Monospace";
         this.context.textBaseline = "top";
 
         this.fontWidth = this.context.measureText("M").width;
@@ -487,7 +487,10 @@ com.robotfindskitten.Screen = (function(rfk, global) {
     };
 
     Screen.prototype.calculateHeight = function calculateHeight() {
-        var heightElement = document.createElement("span");
+
+        // var height =+ this.context.font.split('px')[0];
+        // return height;
+        /*var heightElement = document.createElement("span");
         heightElement.style.fontFamily = "Courier, Monospace";
         heightElement.style.fontSize = "1em";
         heightElement.style.position = "absolute";
@@ -503,7 +506,36 @@ com.robotfindskitten.Screen = (function(rfk, global) {
 
         body.removeChild(heightElement);
 
-        return height;
+        return height;*/
+
+
+        var text = $('<span>M</span>').css({ font: '1em Courier, Monospace' });
+        var block = $('<div style="display: inline-block; width: 1px; height: 0px;"></div>');
+
+        var div = $('<div></div>');
+        div.append(text, block);
+
+        var body = $('body');
+        body.append(div);
+
+        try {
+
+            var result = {};
+
+            block.css({ verticalAlign: 'baseline' });
+            result.ascent = block.offset().top - text.offset().top;
+
+            block.css({ verticalAlign: 'bottom' });
+            result.height = block.offset().top - text.offset().top;
+
+            result.descent = result.height - result.ascent;
+
+        } finally {
+            div.remove();
+        }
+
+        return result.height;
+
     };
 
     Screen.prototype.drawScreenItem = function drawScreenItem(screenItem) {
@@ -539,10 +571,10 @@ com.robotfindskitten.Screen = (function(rfk, global) {
         this.context.save();
 
         this.context.fillColor = BACKGROUND_COLOR;
-        this.context.fillRect((screenItem.x * this.fontWidth) - 1,
-            (screenItem.y * this.fontHeight) - 1,
+        this.context.fillRect((screenItem.x * this.fontWidth - 1),
+            (screenItem.y * this.fontHeight),
             this.fontWidth + 2,
-            this.fontHeight + 2);
+            this.fontHeight);
 
         this.context.restore();
     };
@@ -1316,28 +1348,24 @@ com.robotfindskitten.Game = (function(rfk, global) {
         switch (event.keyCode) {
             case 38: // Up arrow
             case 87: // W
-            case 75: // K (vi)
                 this.moveRobot(0, -1);
                 event.preventDefault();
                 break;
 
             case 40: // Down arrow
             case 83: // S
-            case 74: // J (vi)
                 this.moveRobot(0, 1);
                 event.preventDefault();
                 break;
 
             case 37: // Left arrow
             case 65: // A
-            case 72: // H (vi)
                 this.moveRobot(-1, 0);
                 event.preventDefault();
                 break;
 
             case 39: // Right arrow
             case 68: // D
-            case 76: // L (vi)
                 this.moveRobot(1, 0);
                 event.preventDefault();
                 break;

@@ -46,10 +46,10 @@ a {
 }
 
 #nki {
-    width: 798px;
     height: 2.2em;
+    /*width: 798px;
     padding-left: 0.2em;
-    /*margin-top: 0.3em;*/
+    margin-top: 0.3em;*/
 }
 
 #newGame {
@@ -57,23 +57,23 @@ a {
     color: white;
 }
 
-#instructions {
+/*#instructions {
     width: 800px;
     margin-top: 0.3em;
-}
+}*/
 
-#display {
+/*#display {
     white-space: nowrap;
     margin-top: 0.3em;
-}
+}*/
 
-#credits {
+/*#credits {
     margin-top: 0.3em;
     width: 800px;
     border-width: 1px;
     border-color: gray;
     border-top: 1px solid gray;
-}
+}*/
 
 .outer {
   width: 100%;
@@ -95,6 +95,7 @@ pre {
 	border: none;
     color: grey;
     background-color: black;
+    margin:0;
 }
 
 canvas {
